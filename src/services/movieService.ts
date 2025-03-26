@@ -59,28 +59,55 @@ const handleApiError = (error: unknown, message: string) => {
 // Get poster image URL
 export const getPosterUrl = (path: string | null, size: "w92" | "w154" | "w185" | "w342" | "w500" | "w780" | "original" = "w342") => {
   if (!path) return "/placeholder.svg";
-  if (path.startsWith("/")) {
-    return `https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750`;
-  }
   return path;
 };
 
 // Get backdrop image URL
 export const getBackdropUrl = (path: string | null, size: "w300" | "w780" | "w1280" | "original" = "w1280") => {
   if (!path) return null;
-  if (path.startsWith("/")) {
-    return `https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720`;
-  }
   return path;
 };
+
+// Collection of different Unsplash image URLs for movie posters
+const posterImages = [
+  "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&h=750", // Movie poster 1
+  "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500&h=750", // Movie poster 2
+  "https://images.unsplash.com/photo-1542204165-65bf26472b9b?w=500&h=750", // Movie poster 3
+  "https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=500&h=750", // Movie poster 4
+  "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=500&h=750", // Movie poster 5
+  "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=500&h=750", // Movie poster 6
+  "https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?w=500&h=750", // Movie poster 7
+  "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=500&h=750", // Movie poster 8
+  "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=500&h=750", // Movie poster 9
+  "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500&h=750", // Movie poster 10
+  "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=500&h=750", // Movie poster 11
+  "https://images.unsplash.com/photo-1512070679279-8988d32161be?w=500&h=750", // Movie poster 12
+  "https://images.unsplash.com/photo-1486693128850-a77436e7ba3c?w=500&h=750", // Movie poster 13
+  "https://images.unsplash.com/photo-1560343776-97e7d202ff0e?w=500&h=750", // Movie poster 14
+  "https://images.unsplash.com/photo-1614846384571-1e76d94cc0e4?w=500&h=750", // Movie poster 15
+  "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=500&h=750", // Movie poster 16
+  "https://images.unsplash.com/photo-1533928298208-27ff66555d8d?w=500&h=750", // Movie poster 17
+  "https://images.unsplash.com/photo-1616530940355-351fabd9524b?w=500&h=750", // Movie poster 18
+  "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=500&h=750", // Movie poster 19
+  "https://images.unsplash.com/photo-1600431521340-491eca880813?w=500&h=750", // Movie poster 20
+];
+
+// Collection of different Unsplash image URLs for movie backdrops
+const backdropImages = [
+  "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720", // Backdrop 1
+  "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1280&h=720", // Backdrop 2
+  "https://images.unsplash.com/photo-1595769816263-9b910be24d5f?w=1280&h=720", // Backdrop 3
+  "https://images.unsplash.com/photo-1562329265-95a6d7a83440?w=1280&h=720", // Backdrop 4
+  "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1280&h=720", // Backdrop 5
+];
 
 // Local movie data for famous Hollywood and Bollywood movies
 const localMovies: Movie[] = [
   {
     id: 1,
     title: "The Shawshank Redemption",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[0],
+    backdrop_path: backdropImages[0],
     vote_average: 9.3,
     vote_count: 21000,
     release_date: "1994-09-23",
@@ -90,8 +117,8 @@ const localMovies: Movie[] = [
   {
     id: 2,
     title: "The Godfather",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[1],
+    backdrop_path: backdropImages[1],
     vote_average: 9.2,
     vote_count: 15700,
     release_date: "1972-03-14",
@@ -101,8 +128,8 @@ const localMovies: Movie[] = [
   {
     id: 3,
     title: "The Dark Knight",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[2],
+    backdrop_path: backdropImages[2],
     vote_average: 9.0,
     vote_count: 23500,
     release_date: "2008-07-16",
@@ -112,8 +139,8 @@ const localMovies: Movie[] = [
   {
     id: 4,
     title: "Pulp Fiction",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[3],
+    backdrop_path: backdropImages[3],
     vote_average: 8.9,
     vote_count: 21500,
     release_date: "1994-10-14",
@@ -123,8 +150,8 @@ const localMovies: Movie[] = [
   {
     id: 5,
     title: "Fight Club",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[4],
+    backdrop_path: backdropImages[4],
     vote_average: 8.8,
     vote_count: 18500,
     release_date: "1999-10-15",
@@ -134,8 +161,8 @@ const localMovies: Movie[] = [
   {
     id: 6,
     title: "Inception",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[5],
+    backdrop_path: backdropImages[0],
     vote_average: 8.8,
     vote_count: 20500,
     release_date: "2010-07-16",
@@ -145,8 +172,8 @@ const localMovies: Movie[] = [
   {
     id: 7,
     title: "The Matrix",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[6],
+    backdrop_path: backdropImages[1],
     vote_average: 8.7,
     vote_count: 19500,
     release_date: "1999-03-31",
@@ -156,8 +183,8 @@ const localMovies: Movie[] = [
   {
     id: 8,
     title: "Dilwale Dulhania Le Jayenge",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[7],
+    backdrop_path: backdropImages[2],
     vote_average: 8.9,
     vote_count: 3500,
     release_date: "1995-10-20",
@@ -167,8 +194,8 @@ const localMovies: Movie[] = [
   {
     id: 9,
     title: "3 Idiots",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[8],
+    backdrop_path: backdropImages[3],
     vote_average: 8.6,
     vote_count: 3200,
     release_date: "2009-12-25",
@@ -178,8 +205,8 @@ const localMovies: Movie[] = [
   {
     id: 10,
     title: "Lagaan",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[9],
+    backdrop_path: backdropImages[4],
     vote_average: 8.3,
     vote_count: 1800,
     release_date: "2001-06-15",
@@ -189,8 +216,8 @@ const localMovies: Movie[] = [
   {
     id: 11,
     title: "Sholay",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[10],
+    backdrop_path: backdropImages[0],
     vote_average: 8.4,
     vote_count: 1700,
     release_date: "1975-08-15",
@@ -200,8 +227,8 @@ const localMovies: Movie[] = [
   {
     id: 12,
     title: "Interstellar",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[11],
+    backdrop_path: backdropImages[1],
     vote_average: 8.6,
     vote_count: 27500,
     release_date: "2014-11-05",
@@ -211,8 +238,8 @@ const localMovies: Movie[] = [
   {
     id: 13,
     title: "Forrest Gump",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[12],
+    backdrop_path: backdropImages[2],
     vote_average: 8.8,
     vote_count: 20900,
     release_date: "1994-07-06",
@@ -222,8 +249,8 @@ const localMovies: Movie[] = [
   {
     id: 14,
     title: "PK",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[13],
+    backdrop_path: backdropImages[3],
     vote_average: 8.2,
     vote_count: 2800,
     release_date: "2014-12-19",
@@ -233,8 +260,8 @@ const localMovies: Movie[] = [
   {
     id: 15,
     title: "The Lord of the Rings: The Return of the King",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[14],
+    backdrop_path: backdropImages[4],
     vote_average: 8.9,
     vote_count: 18700,
     release_date: "2003-12-17",
@@ -244,8 +271,8 @@ const localMovies: Movie[] = [
   {
     id: 16,
     title: "Kabhi Khushi Kabhie Gham",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[15],
+    backdrop_path: backdropImages[0],
     vote_average: 7.9,
     vote_count: 2100,
     release_date: "2001-12-14",
@@ -255,8 +282,8 @@ const localMovies: Movie[] = [
   {
     id: 17,
     title: "The Avengers",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[16],
+    backdrop_path: backdropImages[1],
     vote_average: 8.0,
     vote_count: 26100,
     release_date: "2012-05-04",
@@ -266,8 +293,8 @@ const localMovies: Movie[] = [
   {
     id: 18,
     title: "Bahubali: The Beginning",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[17],
+    backdrop_path: backdropImages[2],
     vote_average: 8.1,
     vote_count: 1500,
     release_date: "2015-07-10",
@@ -277,8 +304,8 @@ const localMovies: Movie[] = [
   {
     id: 19,
     title: "Joker",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[18],
+    backdrop_path: backdropImages[3],
     vote_average: 8.4,
     vote_count: 19800,
     release_date: "2019-10-04",
@@ -288,8 +315,8 @@ const localMovies: Movie[] = [
   {
     id: 20,
     title: "Gully Boy",
-    poster_path: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=750",
-    backdrop_path: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1280&h=720",
+    poster_path: posterImages[19],
+    backdrop_path: backdropImages[4],
     vote_average: 8.2,
     vote_count: 1100,
     release_date: "2019-02-14",
