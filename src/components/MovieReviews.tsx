@@ -1,6 +1,6 @@
 
-import React from "react";
-import { Star } from "lucide-react";
+import React, { useState } from "react";
+import { Star, ChevronDown } from "lucide-react";
 import { MovieReview, formatDate } from "../services/movieService";
 
 interface MovieReviewsProps {
@@ -9,6 +9,16 @@ interface MovieReviewsProps {
 }
 
 const MovieReviews: React.FC<MovieReviewsProps> = ({ reviews, isLoading }) => {
+  const [expandedReviews, setExpandedReviews] = useState<string[]>([]);
+
+  const toggleReviewExpansion = (reviewId: string) => {
+    setExpandedReviews(prev => 
+      prev.includes(reviewId) 
+        ? prev.filter(id => id !== reviewId) 
+        : [...prev, reviewId]
+    );
+  };
+
   if (isLoading) {
     return (
       <div className="space-y-4 mt-6">
@@ -45,25 +55,40 @@ const MovieReviews: React.FC<MovieReviewsProps> = ({ reviews, isLoading }) => {
     <div className="space-y-4 mt-6 animate-fade-in">
       <h3 className="text-xl font-semibold">Reviews</h3>
       <div className="space-y-4">
-        {reviews.map((review) => (
-          <div key={review.id} className="bg-card border border-border rounded-lg p-4 shadow-sm">
-            <div className="flex items-start justify-between mb-2">
-              <div>
-                <h4 className="font-medium">{review.author}</h4>
-                <p className="text-xs text-muted-foreground">
-                  {formatDate(review.created_at)}
-                </p>
-              </div>
-              {review.author_details.rating && (
-                <div className="flex items-center gap-1 bg-primary/10 px-2 py-1 rounded-full">
-                  <Star className="h-3 w-3 text-yellow-500 fill-yellow-500" />
-                  <span className="text-xs font-medium">{review.author_details.rating}/10</span>
+        {reviews.map((review) => {
+          const isExpanded = expandedReviews.includes(review.id);
+          
+          return (
+            <div key={review.id} className="bg-card border border-border rounded-lg p-4 shadow-sm">
+              <div className="flex items-start justify-between mb-2">
+                <div>
+                  <h4 className="font-medium">{review.author}</h4>
+                  <p className="text-xs text-muted-foreground">
+                    {formatDate(review.created_at)}
+                  </p>
                 </div>
+                {review.author_details.rating && (
+                  <div className="flex items-center gap-1 bg-primary/10 px-2 py-1 rounded-full">
+                    <Star className="h-3 w-3 text-yellow-500 fill-yellow-500" />
+                    <span className="text-xs font-medium">{review.author_details.rating}/10</span>
+                  </div>
+                )}
+              </div>
+              <p className={`text-sm text-muted-foreground mt-2 ${isExpanded ? '' : 'line-clamp-4'}`}>
+                {review.content}
+              </p>
+              {review.content.length > 300 && (
+                <button 
+                  onClick={() => toggleReviewExpansion(review.id)}
+                  className="mt-2 flex items-center text-xs text-primary hover:text-primary/80 transition-colors"
+                >
+                  {isExpanded ? 'Show less' : 'Read more'} 
+                  <ChevronDown className={`ml-1 h-3 w-3 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                </button>
               )}
             </div>
-            <p className="text-sm text-muted-foreground mt-2 line-clamp-4">{review.content}</p>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
