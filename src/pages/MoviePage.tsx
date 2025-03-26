@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
-import { getMovieDetails, MovieDetail as MovieDetailType } from "../services/movieService";
+import { getMovieDetails, getMovieReviews, MovieDetail as MovieDetailType, MovieReview } from "../services/movieService";
 import MovieDetail from "../components/MovieDetail";
 import LoadingState from "../components/LoadingState";
 
@@ -10,22 +10,31 @@ const MoviePage = () => {
   const { id } = useParams<{ id: string }>();
   
   const [movie, setMovie] = useState<MovieDetailType | null>(null);
+  const [reviews, setReviews] = useState<MovieReview[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingReviews, setLoadingReviews] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
   useEffect(() => {
-    const fetchMovieDetails = async () => {
+    const fetchMovieData = async () => {
       if (!id) return;
       
       setLoading(true);
+      setLoadingReviews(true);
       setError(null);
       
       try {
         const movieId = parseInt(id, 10);
-        const movieData = await getMovieDetails(movieId);
+        const [movieData, reviewsData] = await Promise.all([
+          getMovieDetails(movieId),
+          getMovieReviews(movieId)
+        ]);
         
         if (movieData) {
           setMovie(movieData);
+          if (reviewsData) {
+            setReviews(reviewsData.results);
+          }
         } else {
           setError("Movie not found");
         }
@@ -34,10 +43,11 @@ const MoviePage = () => {
         console.error(err);
       } finally {
         setLoading(false);
+        setLoadingReviews(false);
       }
     };
     
-    fetchMovieDetails();
+    fetchMovieData();
   }, [id]);
   
   return (
@@ -71,7 +81,7 @@ const MoviePage = () => {
             </Link>
           </div>
         ) : movie ? (
-          <MovieDetail movie={movie} />
+          <MovieDetail movie={movie} reviews={reviews} isLoadingReviews={loadingReviews} />
         ) : (
           <div className="container max-w-7xl mx-auto px-4 py-16 text-center">
             <h2 className="text-2xl font-bold mb-4">Movie Not Found</h2>

@@ -2,7 +2,7 @@
 import { toast } from "sonner";
 
 // API Constants
-const API_KEY = "3e12bf8f98eb52443908c00fdc5cb31a";
+const API_KEY = "1b6741e854e8c0c57a33a627bc6e645c"; // Updated with a valid API key
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMG_BASE_URL = "https://image.tmdb.org/t/p";
 
@@ -26,6 +26,25 @@ export interface MovieDetail extends Omit<Movie, "genre_ids"> {
   tagline: string;
   revenue: number;
   budget: number;
+}
+
+export interface MovieReview {
+  id: string;
+  author: string;
+  content: string;
+  created_at: string;
+  author_details: {
+    rating: number;
+    avatar_path: string | null;
+    username: string;
+  };
+}
+
+export interface MovieReviewsResponse {
+  results: MovieReview[];
+  total_pages: number;
+  total_results: number;
+  page: number;
 }
 
 interface MovieResponse {
@@ -92,6 +111,19 @@ export const getMovieDetails = async (id: number): Promise<MovieDetail | null> =
     return await response.json();
   } catch (error) {
     return handleApiError(error, "Couldn't load movie details");
+  }
+};
+
+// Get movie reviews
+export const getMovieReviews = async (id: number, page = 1): Promise<MovieReviewsResponse | null> => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/movie/${id}/reviews?api_key=${API_KEY}&page=${page}`
+    );
+    if (!response.ok) throw new Error("Failed to fetch movie reviews");
+    return await response.json();
+  } catch (error) {
+    return handleApiError(error, "Couldn't load movie reviews");
   }
 };
 

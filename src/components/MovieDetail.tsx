@@ -1,13 +1,16 @@
 
 import React from "react";
 import { Star, Clock, Calendar, Info } from "lucide-react";
-import { MovieDetail as MovieDetailType, getBackdropUrl, getPosterUrl, formatRuntime, formatDate, formatNumber } from "../services/movieService";
+import { MovieDetail as MovieDetailType, MovieReview, getBackdropUrl, getPosterUrl, formatRuntime, formatDate, formatNumber } from "../services/movieService";
+import MovieReviews from "./MovieReviews";
 
 interface MovieDetailProps {
   movie: MovieDetailType;
+  reviews: MovieReview[];
+  isLoadingReviews: boolean;
 }
 
-const MovieDetail: React.FC<MovieDetailProps> = ({ movie }) => {
+const MovieDetail: React.FC<MovieDetailProps> = ({ movie, reviews, isLoadingReviews }) => {
   const posterUrl = getPosterUrl(movie.poster_path, "w500");
   const backdropUrl = getBackdropUrl(movie.backdrop_path);
   
@@ -49,7 +52,8 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ movie }) => {
                 {movie.genres.map(genre => (
                   <span 
                     key={genre.id}
-                    className="text-xs bg-secondary px-2 py-1 rounded-full text-secondary-foreground"
+                    className="text-xs bg-secondary px-2 py-1 rounded-full text-secondary-fore
+ground"
                   >
                     {genre.name}
                   </span>
@@ -84,7 +88,7 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ movie }) => {
               
               {/* Overview */}
               <div className="mt-4">
-                <h3 className="text-lg font-medium mb-2">Overview</h3>
+                <h3 className="text-lg font-semibold mb-2">Overview</h3>
                 <p className="text-muted-foreground leading-relaxed">{movie.overview || "No overview available."}</p>
               </div>
               
@@ -107,6 +111,9 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ movie }) => {
             </div>
           </div>
         </div>
+        
+        {/* Reviews Section */}
+        <MovieReviews reviews={reviews} isLoading={isLoadingReviews} />
       </div>
     </div>
   );
